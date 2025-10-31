@@ -12,10 +12,21 @@ def get_banknifty_quote():
     headers = {
         "access-token": ACCESS_TOKEN,
         "dhanClientId": CLIENT_ID,
-        "accept": "application/json"
+        "accept": "application/json",
+        "content-type": "application/json"
     }
-    url = f"{BASE_URL}/marketfeed/quote/26009"
-    response = requests.get(url, headers=headers)
+
+    url = f"{BASE_URL}/marketfeed/quotes"
+
+    # BankNifty spot instrument token (Dhan code for BankNifty index)
+    payload = {
+        "symbols": [
+            {"securityId": "26009"}  # BankNifty index code
+        ]
+    }
+
+    response = requests.post(url, headers=headers, json=payload)
+
     if response.status_code == 200:
         return response.json()
     else:
