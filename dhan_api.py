@@ -4,11 +4,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-ACCESS_TOKEN = os.getenv("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJkaGFuIiwicGFydG5lcklkIjoiIiwiZXhwIjoxNzYxOTg3MDc3LCJpYXQiOjE3NjE5MDA2NzcsInRva2VuQ29uc3VtZXJUeXBlIjoiU0VMRiIsIndlYmhvb2tVcmwiOiIiLCJkaGFuQ2xpZW50SWQiOiIxMTA5MDIwNDgyIn0.kUg6PuC7YT9KfrL7DoCC7oHwCHKk8wmCsFFa5NO8on8qXyd6Z37z1r058dyvRHyt6QesOi8kF2B-xK4HyDzW9g")
-CLIENT_ID = os.getenv("1109020482")
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN") or "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJkaGFuIiwicGFydG5lcklkIjoiIiwiZXhwIjoxNzYxOTg3MDc3LCJpYXQiOjE3NjE5MDA2NzcsInRva2VuQ29uc3VtZXJUeXBlIjoiU0VMRiIsIndlYmhvb2tVcmwiOiIiLCJkaGFuQ2xpZW50SWQiOiIxMTA5MDIwNDgyIn0.kUg6PuC7YT9KfrL7DoCC7oHwCHKk8wmCsFFa5NO8on8qXyd6Z37z1r058dyvRHyt6QesOi8kF2B-xK4HyDzW9g"
+CLIENT_ID = os.getenv("CLIENT_ID") or "1109020482"
 BASE_URL = "https://api.dhan.co/v2"
 
 def get_banknifty_quote():
+    """Fetch BankNifty live quote using DhanHQ API"""
     headers = {
         "access-token": ACCESS_TOKEN,
         "dhanClientId": CLIENT_ID,
@@ -16,12 +17,13 @@ def get_banknifty_quote():
         "content-type": "application/json"
     }
 
+    # ✅ Correct API endpoint (POST)
     url = f"{BASE_URL}/marketfeed/quotes"
 
-    # BankNifty spot instrument token (Dhan code for BankNifty index)
+    # BankNifty index ID (26009)
     payload = {
         "symbols": [
-            {"securityId": "26009"}  # BankNifty index code
+            {"securityId": "26009"}
         ]
     }
 
